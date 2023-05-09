@@ -1,0 +1,42 @@
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        int[] mas1 = Console.ReadLine().Split().Select(int.Parse).ToArray();
+        int n1 = mas1[0];
+        mas1 = mas1.Skip(1).ToArray();
+        int[] lst1 = Console.ReadLine().Split().Skip(1).Select(int.Parse).ToArray();
+        int[] mas2 = Console.ReadLine().Split().Select(int.Parse).ToArray();
+        int n2 = mas2[0];
+        mas2 = mas2.Skip(1).ToArray();
+        int[] lst2 = Console.ReadLine().Split().Skip(1).Select(int.Parse).ToArray();
+        int[] money = Console.ReadLine().Split().Select(int.Parse).ToArray();
+
+        for (int i = 0; i < money.Length; i++)
+        {
+            int k = lst1.Count(j => money[i] >= j);
+            money[i] -= k;
+        }
+
+        for (int i = 0; i < money.Length - 1; i++)
+            money[i + 1] += money[i] * mas1[i];
+
+        money = new int[] { money.Last() };
+        for (int i = 0; i < n2 - 1; i++)
+        {
+            money = money.Concat(new int[] { money[i] / mas2[mas2.Length - i - 1] }).ToArray();
+            money[i] %= mas2[mas2.Length - 1 - i];
+        }
+
+        money = money.Reverse().ToArray();
+        for (int i = 0; i < money.Length; i++)
+        {
+            money[i] += lst2.Count(j => money[i] >= j);
+            money[i] = int.Parse(money[i].ToString());
+        }
+        Console.WriteLine(string.Join(" ", money));
+    }
+}
