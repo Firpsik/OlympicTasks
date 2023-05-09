@@ -1,0 +1,27 @@
+with open('test.txt', 'r') as test:
+    some = [line.split() for line in test.read().split('\n')]
+
+for i in range(len(some)):
+    if some[i][0] == 'MIX':
+        some[i][0] = 'MX'
+        some[i].append('XM')
+        
+    elif some[i][0] == 'WATER':
+        some[i][0] = 'WT'
+        some[i].append('TW')
+        
+    elif some[i][0] == 'DUST':
+        some[i][0] = 'DT'
+        some[i].append('TD')
+        
+    elif some[i][0] == 'FIRE':
+        some[i][0] = 'FR'
+        some[i].append('RF')
+        
+    for j in range(len(some[i])):
+        if some[i][j].isdigit():
+            some[i][j] = ''.join(some[int(some[i][j]) - 1])
+
+with open('End.txt', 'w') as end:
+    end.write(''.join(some[i]))
+# Сделал на шарпе несколько программ ответ получается неверным. Сделал то же самое на python'е работает...
